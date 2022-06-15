@@ -1,14 +1,14 @@
 import Header from '../../Layouts/Menu/Header.jsx'
 import Footer from '../../Layouts/Menu/Footer.jsx'
 
-const Register = () => {
+const Detail = () => {
     return (  
         <>
             <Header />
-            <h1>dang ky</h1>
+            <h1>detail page</h1>
             <Footer />
         </>
     );
 }
  
-export default Register;
+export default Detail;

@@ -1,0 +1,54 @@
+.book__page{
+    width: 90%;
+    margin: auto;
+}
+
+.book__page h2{
+    color: rgb(207, 24, 70);
+}
+
+.book__page table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.book__page td, th{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.book__page tr:nth-child{
+    background-color: #dddddd;
+}
+/* Book Add */
+.bookAdd__page{
+    width: 90%;
+    margin: auto;
+}
+.bookAdd__page p{
+    color: red;
+}
+.bookAdd__page h2{
+    color: rgb(29, 87, 102);
+}
+.bookAdd__page button{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+.register__page{
+    width: 90%;
+    margin: auto;
+}
+.register__page p{
+    color: red;
+}
+.register__page h2{
+    color: rgb(29, 87, 102);
+}
+.register__page button{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

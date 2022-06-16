@@ -4,7 +4,23 @@ const CategoryUpdate = () => {
     return (  
         <>
             <Menu />
-            <h1>CategoryUpdate</h1>
+            <div className="categoryAdd__page">
+                <h2>CategoryUpdate Page</h2>
+                
+                <div className="">
+                    <label htmlFor="name">name</label>
+                    <input type="text" id="name" value="AAAAAAAAA"/>
+                    <p>error</p>
+                </div>
+                <div className="">
+                    <label htmlFor="description">description</label>
+                    <input type="text" id="description" value="AAAAAAAAA"/>
+                    <p>error</p>
+                </div>
+                
+                <button>Add</button>
+
+            </div>
         </>
     );
 }

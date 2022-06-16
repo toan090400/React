@@ -1,10 +1,43 @@
 import Menu from '../../../Layouts/Admin/Menu.jsx'
+import './book.css'
+
+import { Link } from "react-router-dom";
 
 const Book = () => {
     return (  
         <>
             <Menu />
-            <h1>Book</h1>
+            <div className="book__page">
+                <h2>Book Page</h2>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>CreateDay</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>12/2/2022</td>
+                        <td>
+                            <Link to='/admin/bookUdate/:id'>Update</Link>
+                        </td>
+                        <td>
+                            Delete
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>12/2/2022</td>
+                        <td>
+                            <Link to='/admin/bookUdate/:id'>Update</Link>
+                        </td>
+                        <td>
+                            Delete
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </>
     );
 }

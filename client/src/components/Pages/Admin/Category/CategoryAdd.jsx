@@ -4,7 +4,23 @@ const CategoryAdd = () => {
     return (  
         <>
             <Menu />
-            <h1>CategoryAdd</h1>
+            <div className="categoryAdd__page">
+                <h2>CategoryAdd Page</h2>
+                
+                <div className="">
+                    <label htmlFor="name">name</label>
+                    <input type="text" id="name"/>
+                    <p>error</p>
+                </div>
+                <div className="">
+                    <label htmlFor="description">description</label>
+                    <input type="text" id="description"/>
+                    <p>error</p>
+                </div>
+                
+                <button>Add</button>
+
+            </div>
         </>
     );
 }

@@ -1,0 +1,11 @@
+.detail__page{
+    width: 90%;
+    margin: auto;
+}
+.detail__page h2{
+    color: blueviolet;
+}
+
+.detail__page div img{
+    width: 100px;
+}

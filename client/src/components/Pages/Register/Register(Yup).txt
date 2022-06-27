@@ -1,0 +1,156 @@
+import Header from '../../Layouts/Menu/Header.jsx'
+import Footer from '../../Layouts/Menu/Footer.jsx'
+import './register.css'
+
+import * as Yup from "yup";
+import { useFormik } from 'formik';
+
+const Register = () => {
+
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: "",
+            passwordConfirm: "",
+            isAdmin: "",
+            email: "",
+            phone: "",
+            category: "",
+        },
+        validationSchema: Yup.object({
+            username: Yup.string()
+                .min(3, "username tối thiểu có 3 ký tự")
+                .max(10, "username tối da 10 ký tự")
+                .required("username không được trống!"),
+            password: Yup.string()
+                .required("password không được trống!"),
+            passwordConfirm: Yup.string()
+                .oneOf([Yup.ref("password"),null], "Password's not match")
+                .required("password không khớp!"),
+            isAdmin: Yup.string()
+                .required("isAdmin không được trống"),
+            email: Yup.string()
+                .matches(
+                    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                    "email không hợp lệ"
+                )
+                .required("email không được trống!"),
+            phone: Yup.string()
+                .matches(/^[0-9\-\+]{9,15}$/g, "phone không hợp lệ")
+                .required("phone không được trống!"),
+            category: Yup.array()
+                .required("category không được trống"),
+        }),
+        onSubmit:(values, { resetForm }) => {
+
+            console.log(values);
+            resetForm();
+      
+        },
+    });
+    
+    return (  
+        <>
+            <Header />
+            <div className="register__page">
+                <h2>Register Page</h2>
+                <form onSubmit={formik.handleSubmit}>
+                    <div className="">
+                        <label htmlFor="username">username</label>
+                        <input type="text" id="username" name="username" onChange={formik.handleChange}
+                            value={formik.values.username}
+                        />
+                        {formik.errors.username && (
+                            <p>{formik.errors.username}</p>
+                        )}
+                    </div>
+
+                    <div className="">
+                        <label htmlFor="password">password</label>
+                        <input type="text" id="password" name="password" onChange={formik.handleChange}
+                            value={formik.values.password}
+                        />
+                        {formik.errors.password && (
+                            <p>{formik.errors.password}</p>
+                        )}
+                    </div>
+                    
+                    <div className="">
+                        <label htmlFor="passwordConfirm">passwordConfirm</label>
+                        <input type="text" id="passwordConfirm" name="passwordConfirm" onChange={formik.handleChange}
+                            value={formik.values.passwordConfirm}
+                        />
+                        {formik.errors.passwordConfirm && (
+                            <p>{formik.errors.passwordConfirm}</p>
+                        )}
+                    </div>
+                    
+                    
+
+                    <div className="">
+                        <h3>isAdmin:</h3>
+                        <input type="radio" id="true" name="isAdmin" onChange={formik.handleChange}
+                            value="true"
+                        />
+                        <label htmlFor="true">true</label><br/>
+                        <input type="radio" id="false" name="isAdmin" onChange={formik.handleChange}
+                            value="false"
+                            
+                        />
+                        <label htmlFor="false">false</label><br/>
+                        {formik.errors.isAdmin && (
+                            <p>{formik.errors.isAdmin}</p>
+                        )}
+                    </div>
+
+                    <div className="">
+                        <label htmlFor="email">email</label>
+                        <input type="text" id="email" name="email" onChange={formik.handleChange}
+                            value={formik.values.email}
+                        />
+                        {formik.errors.email && (
+                            <p>{formik.errors.email}</p>
+                        )}
+                    </div>
+
+                    <div className="">
+                        <label htmlFor="phone">phone</label>
+                        <input type="text" id="phone" name="phone" onChange={formik.handleChange}
+                            value={formik.values.phone}
+                        />
+                        {formik.errors.phone && (
+                            <p>{formik.errors.phone}</p>
+                        )}
+                    </div>
+
+                    <div className="">
+                    <h3>category:</h3>
+                        <input type="checkbox" id="hành động" name="category" onChange={formik.handleChange}
+                            value="hành động"
+                            
+                        />
+                        <label htmlFor="hành động">hành động</label><br/>
+                        <input type="checkbox" id="trinh thám" name="category" onChange={formik.handleChange}
+                            value="trinh thám"
+                            
+                        />
+                        <label htmlFor="trinh thám">trinh thám</label><br/>
+                        <input type="checkbox" id="mạo hiểm" name="category" onChange={formik.handleChange}
+                            value="mạo hiểm"
+                            
+                        />
+                        <label htmlFor="mạo hiểm">mạo hiểm</label><br/>
+                        {formik.errors.category && (
+                            <p>{formik.errors.category}</p>
+                        )}
+                    </div>
+
+                    <button>Add</button>
+                </form>
+            </div>
+            <Footer />
+        </>
+    );
+}
+ 
+export default Register;

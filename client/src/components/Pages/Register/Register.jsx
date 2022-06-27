@@ -3,13 +3,19 @@ import Footer from '../../Layouts/Menu/Footer.jsx'
 import './register.css'
 
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const Register = () => {
 
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     const password = watch('password');
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+        try {
+            await axios.post('http://localhost:5000/api/users',data);
+            reset();
+        } catch (error) {
+            console.log(error)
+        }
         reset();
     };
     
@@ -105,7 +111,6 @@ const Register = () => {
                         />
                         {errors.email && (<p>{errors.email.message}</p>)}
                     </div>
-
                     <div className="">
                         <label htmlFor="phone">phone</label>
                         <input type="text" id="phone"

@@ -1,21 +1,29 @@
 import Menu from '../../../Layouts/Admin/Menu.jsx'
 
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState } from "react";
 
 const CategoryAdd = () => {
 
+    const [getMessage, setMessage] = useState('');
+
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
-        reset();
+    const onSubmit = async (data) => {
+        try {
+            const postData = await axios.post('http://localhost:5000/api/categorys',data);
+            setMessage(postData.data.message);
+            reset();
+        } catch (error) {
+            console.log(error)
+        }
     };
-    
     return (  
         <>
             <Menu />
             <div className="categoryAdd__page">
                 <h2>CategoryAdd Page</h2>
-                
+                <h2>Thông báo: {getMessage}</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="">
                         <label htmlFor="name">name</label>

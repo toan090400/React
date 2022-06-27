@@ -1,13 +1,34 @@
 import Menu from '../../../Layouts/Admin/Menu.jsx'
 
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const BookAdd = () => {
+    const [getMessage, setMessage] = useState('');
+    const [getCategorys, setCategorys] = useState([]);
+    const url = "http://localhost:5000/api/categorys";
+    useEffect(() => {
+        const getAllCategorys = async () => {
+            try {
+                const getAllCategorys = await axios.get(url);
+                setCategorys(getAllCategorys.data);
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        getAllCategorys();
+    }, []);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
-        reset();
+    const onSubmit = async (data) => {
+        try {
+            const postData = await axios.post('http://localhost:5000/api/books',data);
+            setMessage(postData.data.message);
+            reset();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (  
@@ -15,7 +36,7 @@ const BookAdd = () => {
             <Menu />
             <div className="bookAdd__page">
                 <h2>BookAdd Page</h2>
-
+                <h2>Thông báo: {getMessage}</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="">
                         <label htmlFor="name">name</label>
@@ -82,33 +103,21 @@ const BookAdd = () => {
 
                     <div className="">
                         <h3>category:</h3>
-                        <input type="checkbox" id="hành động" name="category" value="hành động"
-                            {...register("category",{
-                                required: {
-                                    value: true,
-                                    message: "category không được trống"
-                                },
-                            })}
-                        />
-                        <label htmlFor="hành động">hành động</label><br/>
-                        <input type="checkbox" id="trinh thám" name="category" value="trinh thám"
-                            {...register("category",{
-                                required: {
-                                    value: true,
-                                    message: "category không được trống"
-                                },
-                            })}
-                        />
-                        <label htmlFor="trinh thám">trinh thám</label><br/>
-                        <input type="checkbox" id="mạo hiểm" name="category" value="mạo hiểm"
-                            {...register("category",{
-                                required: {
-                                    value: true,
-                                    message: "category không được trống"
-                                },
-                            })}
-                        />
-                        <label htmlFor="mạo hiểm">mạo hiểm</label><br/>
+                        {getCategorys.map( item => {
+                            return(
+                                <div key={item._id}>
+                                    <input type="checkbox" id={item.name} name="category" value={item._id}
+                                    {...register("category",{
+                                        required: {
+                                            value: true,
+                                            message: "category không được trống"
+                                        },
+                                    })}
+                                />
+                                <label htmlFor={item.name}>{item.name}</label><br/>
+                                </div>
+                            )
+                        })}
                         {errors.category && (<p>{errors.category.message}</p>)}
                     </div>
 

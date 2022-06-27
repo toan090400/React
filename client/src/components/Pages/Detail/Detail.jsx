@@ -2,7 +2,27 @@ import Header from '../../Layouts/Menu/Header.jsx'
 import Footer from '../../Layouts/Menu/Footer.jsx'
 import './detail.css'
 
+import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
+import axios from "axios";
+
 const Detail = () => {
+
+    let { id } = useParams();
+
+    const [getBook, setBook] = useState([]);
+    useEffect(() => {
+        const getBook = async () => {
+            try {
+                const getDataBook = await axios.get(`http://localhost:5000/api/books/${id}`);
+                setBook(getDataBook.data);
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        getBook();
+    }, [id]);
+
     return (  
         <>
             <Header />
@@ -10,39 +30,35 @@ const Detail = () => {
                 <h2>Detail Page</h2>
                 <div className="div">
                     <p>name:</p>
-                    <p>aaaaaaaaa</p>
+                    <h3>{getBook.name}</h3>
                 </div>
                 <div className="div">
                     <p>difficulty:</p>
-                    <p>bbbbbbbbb</p>
+                    <h3>{getBook.difficulty}</h3>
                 </div>
                 <div className="div">
                     <p>description:</p>
-                    <p>cccccc</p>
+                    <h3>{getBook.description}</h3>
                 </div>
-                <div className="div">
+                {/* <div className="div">
                     <p>image:</p>
-                    {/* img lấy trong thư mục public */}
+                    
                     <img src="/assets/image-one/com_ga1.png" alt="com_ga1.png" />
-                </div>
+                </div> */}
                 <div className="div">
                     <p>user:</p>
-                    <p>dddd</p>
+                    <h3>{getBook.user?.username ?? '0 biet'}</h3>
+                    {/* <h3>{getBook.user.username}</h3> */}
                 </div>
                 <div className="div">
                     <p>category:</p>
-                    <div>
-                        <p>name1</p>
-                        <p>description1</p>
-                    </div>
-                    <div>
-                        <p>name2</p>
-                        <p>description2</p>
-                    </div>
-                    <div>
-                        <p>name3</p>
-                        <p>description3</p>
-                    </div>
+                    {getBook.category?.map( item => {
+                        return(
+                            <div key={item._id}>
+                                <h3>{item.name}</h3>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
             <Footer />

@@ -19,11 +19,11 @@ const publicRoutes = [
 const privateRoutes = [
     { patch: '/admin/book', component: Book },
     { patch: '/admin/bookAdd', component: BookAdd },
-    { patch: '/admin/bookUdate/:id', component: BookUpdate },
+    { patch: '/admin/bookUpdate/:id', component: BookUpdate },
 
     { patch: '/admin/category', component: Category },
     { patch: '/admin/categoryAdd', component: CategoryAdd },
-    { patch: '/admin/categoryUdate/:id', component: CategoryUpdate },
+    { patch: '/admin/categoryUpdate/:id', component: CategoryUpdate },
 ];
 
 

@@ -1,25 +1,63 @@
 import Menu from '../../../Layouts/Admin/Menu.jsx'
 
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 
 const BookUpdate = () => {
 
-    const { register, handleSubmit, formState: { errors }, } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
-        // reset();
-    };
+    let { id } = useParams();
+    const [getCategorys, setCategorys] = useState([]);
+    const url = "http://localhost:5000/api/categorys";
+    useEffect(() => {
+        const getAllCategorys = async () => {
+            try {
+                const getAllCategorys = await axios.get(url);
+                setCategorys(getAllCategorys.data);
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        getAllCategorys();
+    }, []);
 
+    const [getMessage, setMessage] = useState('');
+    const [getBook, setBook] = useState([]);
+    useEffect(() => {
+        const getBook = async () => {
+            try {
+                const getBook = await axios.get(`http://localhost:5000/api/books/${id}`);
+                
+                setBook(getBook.data);
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        getBook();
+    }, [id]);
+
+    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const onSubmit = async (data) => {
+        const patchData = await axios.patch(`http://localhost:5000/api/books/${id}`,data);
+        setMessage(patchData.data.message);
+        
+    };
+    
     return ( 
         <>
             <Menu />
             <div className="bookAdd__page">
                 <h2>BookUpdate Page</h2>
-
+                <h2>Thông báo: {getMessage}</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <div>
+                        <h4>name: {getBook.name}</h4>
+                    </div>
                     <div className="">
                         <label htmlFor="name">name</label>
-                        <input type="text" id="name" defaultValue={"AAAAAAAAA"}
+                        <input type="text" id="name" 
+                            
                             {...register("name",{
                                 required: {
                                     value: true,
@@ -29,20 +67,44 @@ const BookUpdate = () => {
                         />
                         {errors.name && (<p>{errors.name.message}</p>)}
                     </div>
+                    
                     <div className="">
-                        <h3>difficulty: AAAAAAAAA</h3>
-                        <input type="radio" id="easy" name="difficulty" value="easy"/>
+                        <h3>difficulty: {getBook.difficulty}</h3>
+                        <input type="radio" id="easy" name="difficulty" value="easy"
+                            {...register("difficulty",{
+                                required: {
+                                    value: true,
+                                    message: "difficulty không được trống"
+                                },
+                            })}
+                        />
                         <label htmlFor="easy">easy</label><br/>
-                        <input type="radio" id="medium" name="difficulty" value="medium"/>
+                        <input type="radio" id="medium" name="difficulty" value="medium"
+                            {...register("difficulty",{
+                                required: {
+                                    value: true,
+                                    message: "difficulty không được trống"
+                                },
+                            })}
+                        />
                         <label htmlFor="medium">medium</label><br/>
-                        <input type="radio" id="difficult" name="difficulty" value="difficult"/>
+                        <input type="radio" id="difficult" name="difficulty" value="difficult"
+                            {...register("difficulty",{
+                                required: {
+                                    value: true,
+                                    message: "difficulty không được trống"
+                                },
+                            })}
+                        />
                         <label htmlFor="difficult">difficult</label><br/>
                         {errors.difficulty && (<p>{errors.difficulty.message}</p>)}
                     </div>
-                    
+                    <div>
+                        <h4>description: {getBook.description}</h4>
+                    </div>
                     <div className="">
                         <label htmlFor="description">description</label>
-                        <input type="text" id="description" defaultValue={"AAAAAAAAA"}
+                        <input type="text" id="description" 
                             {...register("description",{
                                 required: {
                                     value: true,
@@ -59,61 +121,35 @@ const BookUpdate = () => {
                         <p>error</p>
                     </div> */}
 
+                    {/*  */}
                     <div className="">
-                        <h3>category: hành động,trinh thám</h3>
-                        <input type="checkbox" id="hành động" value="hành động"/>
-                        <label htmlFor="hành động">hành động</label><br/>
-                        <input type="checkbox" id="trinh thám" value="trinh thám"/>
-                        <label htmlFor="trinh thám">trinh thám</label><br/>
-                        <input type="checkbox" id="mạo hiểm" value="mạo hiểm"/>
-                        <label htmlFor="mạo hiểm">mạo hiểm</label><br/>
+                        <h3>
+                            category:
+                            {getBook.category?.map( item => {
+                                return(
+                                    <div key={item._id}>
+                                        <span>{item.name}</span>
+                                    </div>
+                                )
+                            })}
+                        </h3>
+                        {getCategorys.map( item => {
+                            return(
+                                <div key={item._id}>
+                                    <input type="checkbox" id={item.name} name="category" value={item._id}
+                                    {...register("category",{
+                                        required: {
+                                            value: true,
+                                            message: "category không được trống"
+                                        },
+                                    })}
+                                />
+                                <label htmlFor={item.name}>{item.name}</label><br/>
+                                </div>
+                            )
+                        })}
                         {errors.category && (<p>{errors.category.message}</p>)}
                     </div>
-                    {/* //////////////////////////////////////////// */}
-
-                    {/* <div className="">
-                        <h3>difficulty: AAAAAAAAA</h3>
-                        <input type="radio" id="easy" name="difficulty" value="easy"
-                            {...register("difficulty",{
-                                // required: {
-                                //     value: true,
-                                //     message: "difficulty không được trống"
-                                // },
-                            })}
-                        />
-                        <label htmlFor="easy">easy</label><br/>
-                        <input type="radio" id="medium" name="difficulty" value="medium"
-                            {...register("difficulty",{
-                                // required: {
-                                //     value: true,
-                                //     message: "difficulty không được trống"
-                                // },
-                            })}
-                        />
-                        <label htmlFor="medium">medium</label><br/>
-                        <input type="radio" id="difficult" name="difficulty" value="difficult"
-                            {...register("difficulty",{
-                                // required: {
-                                //     value: true,
-                                //     message: "difficulty không được trống"
-                                // },
-                            })}
-                        />
-                        <label htmlFor="difficult">difficult</label><br/>
-                        {errors.difficulty && (<p>{errors.difficulty.message}</p>)}
-                    </div>
-                    
-
-                    <div className="">
-                        <h3>category: hành động,trinh thám</h3>
-                        <input type="checkbox" id="hành động" value="hành động"/>
-                        <label htmlFor="hành động">hành động</label><br/>
-                        <input type="checkbox" id="trinh thám" value="trinh thám"/>
-                        <label htmlFor="trinh thám">trinh thám</label><br/>
-                        <input type="checkbox" id="mạo hiểm" value="mạo hiểm"/>
-                        <label htmlFor="mạo hiểm">mạo hiểm</label><br/>
-                        {errors.category && (<p>{errors.category.message}</p>)}
-                    </div> */}
 
                     <button>Update</button>
                 </form>

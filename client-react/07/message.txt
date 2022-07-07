@@ -1,0 +1,3 @@
+https://github.com/academind/react-complete-guide-code
+
+Làm chức năng xóa ( chỉ bắt id chứ không xóa )

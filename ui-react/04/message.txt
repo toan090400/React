@@ -1,7 +1,0 @@
-https://github.com/academind/react-complete-guide-code
-
-Làm giao diện thêm thông tin
-
-onChange,onSubmit
-
-Reset data khi submit

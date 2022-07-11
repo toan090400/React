@@ -4,11 +4,11 @@ import { Routes, Route } from "react-router-dom";
 import { publicRoutes, privateRoutes } from './routes/index.js';
 
 function App() {
+
   return (
     <>
-
       <Routes>
-        
+      
         {/* Home page */}
         {publicRoutes.map( (route, index) =>{
 
@@ -23,16 +23,16 @@ function App() {
         {/* Admin page */}
         {privateRoutes.map( (route, index) =>{
 
-        const Page = route.component;
+          const Page = route.component;
 
-        return(
-          <Route key={index} path={route.patch} element={<Page />} />
-        )
+          return(
+            <Route key={index} path={route.patch} element={<Page />} />
+          )
 
         })}
         
       </Routes>
-
+      
     </>
   );
 }

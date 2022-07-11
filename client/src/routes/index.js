@@ -1,6 +1,7 @@
 import Home from '../components/Pages/Home/Home.jsx';
 import Detail from '../components/Pages/Detail/Detail.jsx';
 import Register from '../components/Pages/Register/Register.jsx';
+import Login from '../components/Pages/Login/Login.jsx';
 
 import Book from '../components/Pages/Admin/Book/Book.jsx';
 import BookAdd from '../components/Pages/Admin/Book/BookAdd.jsx';
@@ -14,6 +15,7 @@ const publicRoutes = [
     { patch: '/', component: Home },
     { patch: '/detail/:id', component: Detail },
     { patch: '/register', component: Register },
+    { patch: '/login', component: Login },
 ];
 
 const privateRoutes = [

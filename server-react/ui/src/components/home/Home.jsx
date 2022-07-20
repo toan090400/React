@@ -4,7 +4,7 @@ import MainHeader from '../Layout/MainHeader';
 import axios from "axios";
 import { useState, useEffect } from "react";
 const Home = () => {
-
+    const [getStatus, setStatus] = useState(true);
     const [getPlaces, setPlaces] = useState([]);
     useEffect(() => {
         const getAllPlaces = async () => {
@@ -16,18 +16,25 @@ const Home = () => {
             }
         };
         getAllPlaces();
-    }, []);
+    }, [getStatus]);
+
+    const handleClick = async (e) => {
+        const id = await e._id;
+        await axios.delete(`http://localhost:5000/api/places/${id}`);
+        setStatus(!getStatus);
+    }
 
     return (  
         <>
             <MainHeader/>
             <h1>home page</h1>
             {getPlaces.map(item =>(
-                    <div key={item._id}>
+                <div key={item._id}>
                     <p>Name: {item.name}</p>
                     <p>Number: {item.number}</p>
-                    {/* <img src={item.image} alt={item.name} /> */}
-                    {/* <Link to={`/user/${item._id}`} >Detail</Link> */}
+                    <p>Image: {`http://localhost:5000/${item.image}`}</p>
+                    <img src={`/images/${item.image}`} alt={item.name} />
+                    <button onClick={()=>handleClick(item)} >Detail</button>
                 </div>
             ))}
         </>

@@ -12,9 +12,10 @@ const MainHeader = () => {
     const [login, setLogin] = useState(false);
     const [user, setUser] = useState({});
 
-    // const handlerLogout = () => {
-    //     context.onLogout();
-    // }
+    const handlerLogout = () => {
+        setLogin(false);
+        context.onLogout();
+    }
     
     
 
@@ -53,7 +54,7 @@ const MainHeader = () => {
             )}
 
             {context.isLoggedIn && (
-                <button onClick={()=>context.onLogout()}>Logout</button>
+                <button onClick={handlerLogout}>Logout</button>
             )}
 
             {!context.isLoggedIn && (

@@ -24,19 +24,22 @@ const AddHome = () => {
         // console.log(e.target.files[0].name);
     };
 
-    const handlerSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('number', number);
-        formData.append('image', image);
-        // console.log(formData)
-        
-        axios.post('http://localhost:5000/api/places',formData);
-        
-        setName('');
-        setNumber('');
-        setImage('');
+    const handlerSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            const formData = await new FormData();
+            formData.append('name', name);
+            formData.append('number', number);
+            formData.append('image', image);
+            // console.log(formData)
+            
+            await axios.post('http://localhost:5000/api/places',formData);
+            setName('');
+            setNumber('');
+            setImage('');
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (  
@@ -67,7 +70,6 @@ const AddHome = () => {
                     <input type="file" 
                         accept=".png, .jpg, .jpeg"
                         onChange={imageHandler}
-                        name="image"
                     />
                 </div>
                 <button>Add</button>

@@ -1,5 +1,5 @@
 const Place = require('../models/placeModel');
-
+const fs = require('fs')
 exports.getAllPlaces = async (req, res) => {
     try {
         const places = await Place.find();
@@ -22,11 +22,11 @@ exports.getPlace = async (req, res) => {
 };
 exports.createPlace = async (req, res) => {
     try {
-        // console.log(req.file.destination + req.file.filename)
-        const newPlace = await new Place({
+        // (req.file.destination + req.file.filename)
+        const newPlace = new Place({
             name: req.body.name,
             number: req.body.number,
-            image: req.file.destination +'/'+ req.file.filename,
+            image: req.file.filename,
         });
         newPlace.save((err) => {
             if (err){
@@ -36,12 +36,7 @@ exports.createPlace = async (req, res) => {
                 newPlace,
                 message: 'Thêm mới thành công',
             })
-        })
-        // const newPlace = await Place.create(req.body);
-        // res.status(200).json({
-        //     newPlace,
-        //     message: 'Thêm mới thành công',
-        // })
+        });
 
     } catch (error) {
         console.log(error)
@@ -66,8 +61,11 @@ exports.updatePlace = async (req, res) => {
 };
 exports.deletePlace = async (req, res) => {
     try {
-        await Place.findByIdAndDelete(req.params.id);
-
+        const place = await Place.findByIdAndDelete(req.params.id);
+        console.log(place);
+        fs.unlink(`../ui/public/images/${place.image}`,err => {
+            return console.log(err);
+        })
         res.status(200).json({
             status: 'Xóa thành công',
         })

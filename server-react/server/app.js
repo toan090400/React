@@ -15,13 +15,12 @@ const app = express();
 app.use(helmet());
 // Set cors
 app.use(cors());
+//react images get 
 
 // Development logging
 if( process.env.NODE_ENV === 'development' ){
     app.use(morgan('dev'));
 }
-// Set public folder
-app.use(express.static(path.join(__dirname,'public')));
 
 app.use(express.json());
 app.use(cookieParser());

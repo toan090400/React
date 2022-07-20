@@ -35,7 +35,7 @@ const App = () => {
       )}
 
       {/* nếu không có link phù hợp thì sẽ quay về trang / */}
-      <Route path="*" element={ <Navigate to ="/" /> }/>
+      {/* <Route path="*" element={ <Navigate to ="/" /> }/> */}
 
     </Routes>
   );

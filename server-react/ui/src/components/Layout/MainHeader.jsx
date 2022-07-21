@@ -15,10 +15,8 @@ const MainHeader = () => {
     const handlerLogout = () => {
         setLogin(false);
         context.onLogout();
-    }
+    };
     
-    
-
     useEffect(() => {
         const getUser = async () => {
             try {

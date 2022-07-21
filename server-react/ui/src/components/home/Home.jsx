@@ -32,7 +32,6 @@ const Home = () => {
                 <div key={item._id}>
                     <p>Name: {item.name}</p>
                     <p>Number: {item.number}</p>
-                    <p>Image: {`http://localhost:5000/${item.image}`}</p>
                     <img src={`/images/${item.image}`} alt={item.name} />
                     <button onClick={()=>handleClick(item)} >Detail</button>
                 </div>

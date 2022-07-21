@@ -4,23 +4,24 @@ import AuthContext from '../../context/auth-context'
 
 import { useContext } from 'react';
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Auth = () => {
 
     const context = useContext(AuthContext);
+
+    const navigate = useNavigate();
   
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
     
-
     const onSubmit = async (data) => {
         try {
-            
             const postUser = await axios.post('http://localhost:5000/api/auth/login',data);
             const dataUser = await postUser.data.user;
             context.onLogin(dataUser);
             reset();
+            navigate('/', { replace: true });
         } catch (error) {
             console.log(error)
         }

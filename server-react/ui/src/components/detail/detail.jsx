@@ -29,7 +29,6 @@ const Detail = () => {
             <h1>Detail</h1>
             <div>
                 <p>{data.username}</p>
-                
             </div>
         </>
     );

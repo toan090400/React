@@ -1,52 +1,72 @@
-import { useState } from 'react';
 import axios from "axios";
+import { useForm } from "react-hook-form";
+
 import MainHeader from '../Layout/MainHeader';
+
 const Register = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
-    const usernameHandler = (e) => {
-        setUsername(e.target.value);
-    };
-    const passwordHandler = (e) => {
-        setPassword(e.target.value);
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const password = watch('password');
+
+    const onSubmit = async (data) => {
+        try {
+            const register = await {
+                username:data.username,
+                password:data.password,
+            };
+            await axios.post('http://localhost:5000/api/users',register);
+            reset();
+        } catch (error) {
+            console.log(error)
+        }
+        reset();
     };
 
-    const handlerSubmit = (e) => {
-        
-        // console.log(username,password);
-        // context.onLogin(username,password);
-        e.preventDefault();
-        const register = {
-            username: username,
-            password: password,
-        };
-        axios.post('http://localhost:5000/api/users',register);
-        
-        setUsername('');
-        setPassword('');
-    }
     return (  
         <>
             <MainHeader />
-            <form onSubmit={handlerSubmit}>
-                <div>
-                    <label htmlFor="name">Username</label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        value={username}
-                        onChange={usernameHandler}
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="">
+                    <label htmlFor="username">username</label>
+                    <input type="text" id="username"
+                        {...register("username",{
+                            required: {
+                                value: true,
+                                message: "username không được trống"
+                            },
+                            minLength: {
+                                value: 3,
+                                message: "username tối thiểu có 3 ký tự"
+                            },
+                            maxLength: {
+                                value: 10,
+                                message: "username tối da 10 ký tự"
+                            },
+                        })}
                     />
+                    {errors.username && (<p>{errors.username.message}</p>)}
                 </div>
-                <div>
-                    <label htmlFor="number">Password</label>
-                    <input 
-                        type="text" 
-                        id="number" 
-                        value={password}
-                        onChange={passwordHandler}
+                <div className="">
+                    <label htmlFor="password">password</label>
+                    <input type="text" id="password"
+                        {...register("password",{
+                            required: {
+                                value: true,
+                                message: "password không được trống"
+                            },
+                        })}
                     />
+                    {errors.password && (<p>{errors.password.message}</p>)}
+                </div>
+                
+                <div className="">
+                    <label htmlFor="passwordConfirm">passwordConfirm</label>
+                    <input type="text" id="passwordConfirm"
+                        {...register("passwordConfirm",{
+                            validate: (value) => value === password || "password không khớp"
+                        })}
+                    />
+                    {errors.passwordConfirm && (<p>{errors.passwordConfirm.message}</p>)}
                 </div>
                 <button>Add</button>
             </form>

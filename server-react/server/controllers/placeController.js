@@ -62,7 +62,6 @@ exports.updatePlace = async (req, res) => {
 exports.deletePlace = async (req, res) => {
     try {
         const place = await Place.findByIdAndDelete(req.params.id);
-        console.log(place);
         fs.unlink(`../ui/public/images/${place.image}`,err => {
             return console.log(err);
         })

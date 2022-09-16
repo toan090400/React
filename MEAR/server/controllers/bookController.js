@@ -90,6 +90,7 @@ exports.getBook = async (req, res) => {
 //     res.status(400).json(error);
 //   }
 // };
+// lưu ảnh google drive
 const googleApis = require("googleapis");
 const oauth2Client = new googleApis.google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -204,11 +205,6 @@ exports.deleteBookGoogle = async (req, res) => {
     const image = await drive.files.delete({
       fileId: book.image.id,
     });
-    // const folder = await drive.files.delete({
-    //   // parentId: ["1392IwgxKve3MbjRTPqpOnwVYpTj304ww"],
-    //   parentId: "1UrKKtFX7SKvwYFLTsJYnEF1iNffhCIzU",
-    //   fileId: book.image.id,
-    // });
     res.status(200).json({
       status: "Xóa thành công",
     });

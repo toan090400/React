@@ -41,6 +41,7 @@ const BookAdd = () => {
       });
       formData.append("status", data.status);
       formData.append("image", data.image[0]);
+      console.log(data.image);
       await axios.post("http://localhost:5000/api/books", formData);
       reset();
     } catch (error) {

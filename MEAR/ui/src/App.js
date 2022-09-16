@@ -4,6 +4,7 @@ import { useContext } from "react";
 import AuthContext from "./context/auth-context";
 // truy cập không đăng nhập hoặc đăng nhập bằng tài khoản user
 import Home from "./components/Main/Home/Home.jsx";
+import CategoryDetail from "./components/Main/Category/Category.jsx";
 import Error from "./components/Main/Error/Error.jsx";
 import Detail from "./components/Main/Detail/Detail.jsx";
 import Infomation from "./components/Main/Infomation/Infomation.jsx";
@@ -24,7 +25,8 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/Detail/:id" element={<Detail />} />
+      <Route path="/Detail/:bookId" element={<Detail />} />
+      <Route path="/CategoryDetail/:id" element={<CategoryDetail />} />
       {!isLogin && (
         <>
           <Route path="/Login" element={<Login />} />

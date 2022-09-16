@@ -31,12 +31,14 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // 2 handler
+const actionRouter = require("./routes/actionRoute");
 const bookRouter = require("./routes/bookRoute");
 const categoryRouter = require("./routes/categoryRoute");
 const userRouter = require("./routes/userRoute");
 const authRouter = require("./routes/authRoute");
 
 // 3 routers
+app.use("/api/actions", actionRouter);
 app.use("/api/books", bookRouter);
 app.use("/api/categorys", categoryRouter);
 app.use("/api/users", userRouter);

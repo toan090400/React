@@ -5,32 +5,33 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 const Detail = () => {
-  let { id } = useParams();
-  const [getBook, setBook] = useState("");
+  const { bookId } = useParams();
+  console.log(bookId);
+  const [getBook, setBook] = useState({});
+  const [getImage, setImage] = useState("");
   useEffect(() => {
     const getBook = async () => {
       try {
         const getBook = await axios.get(
-          `http://localhost:5000/api/books/${id}`
+          `http://localhost:5000/api/books/${bookId}`
         );
         setBook(getBook.data);
+        setImage(getBook.data.image.id);
       } catch (error) {
         console.log(error);
       }
     };
     getBook();
-  }, [id]);
+  }, [bookId]);
   return (
     <>
       <MainMenu />
-      <section class="features" id="features">
-        <h1 class="heading">Detail</h1>
-
-        <div class="box-container">
-          <div class="box">
+      <section className="features" id="features">
+        <h1 className="heading">Detail</h1>
+        <div className="box-container">
+          <div className="box">
             <img
-              // src={`${getBook.imageLink}/${getBook.image.id}`}
-              src={`https://lh3.googleusercontent.com/d/${getBook.image.id}`}
+              src={`https://lh3.googleusercontent.com/d/${getImage}`}
               alt={getBook.name}
             />
             <h3>{getBook.name}</h3>

@@ -61,7 +61,7 @@ const MainMenu = () => {
                   {getCategorys.map((item) => {
                     return (
                       <li key={item._id}>
-                        <Link to="#">
+                        <Link to={`/CategoryDetail/${item._id}`}>
                           <i className="fa-solid fa-book-open"></i>
                           {item.name}
                         </Link>

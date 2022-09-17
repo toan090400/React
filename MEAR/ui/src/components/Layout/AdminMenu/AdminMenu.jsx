@@ -36,10 +36,10 @@ const AdminMenu = () => {
             </li>
 
             <li>
-              <Link to="/BookAdd">BookAdd</Link>
+              <Link to="/BookAdd">Book Add</Link>
             </li>
             <li>
-              <Link to="/CategoryAdd">CategoryAdd</Link>
+              <Link to="/CategoryAdd">Category Add</Link>
             </li>
           </ul>
         </nav>

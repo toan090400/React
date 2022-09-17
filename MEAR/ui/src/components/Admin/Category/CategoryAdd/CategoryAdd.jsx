@@ -29,7 +29,7 @@ const CategoryAdd = () => {
       <div className="book__content body">
         <div className="containerI bodyI">
           <div className="header">
-            <h2>CategoryAdd</h2>
+            <h2>Category Add</h2>
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}

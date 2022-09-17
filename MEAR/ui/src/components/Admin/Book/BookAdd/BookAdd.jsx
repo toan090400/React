@@ -54,7 +54,7 @@ const BookAdd = () => {
       <div className="book__content body">
         <div className="containerI bodyI">
           <div className="header">
-            <h2>BookAdd</h2>
+            <h2>Book Add</h2>
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}

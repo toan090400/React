@@ -36,12 +36,19 @@ const BookUpdate = () => {
   } = useForm();
   const onSubmit = async (data) => {
     try {
-      // console.log(data);
+      const image = data.image;
       const formData = await new FormData();
       formData.append("name", data.name);
-      if (data.image[0]) {
-        formData.append("image", data.image[0]);
+      // lưu 1 ảnh (local/google drive)
+      if (image.length > 0) {
+        formData.append("image", image[0]);
       }
+      // lưu nhiều ảnh (local/google drive)
+      // if (image.length > 0) {
+      //   for (let i = 0; i < image.length; i++) {
+      //     formData.append("image", image[i]);
+      //   }
+      // }
       await axios.patch(`http://localhost:5000/api/books/${id}`, formData);
       setStatus(!getStatus);
       reset();

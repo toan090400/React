@@ -10,6 +10,7 @@ import Detail from "./components/Main/Detail/Detail.jsx";
 import Infomation from "./components/Main/Infomation/Infomation.jsx";
 import Login from "./components/Main/Login/Login.jsx";
 import Register from "./components/Main/Register/Register.jsx";
+import Search from "./components/Main/Search/Search.jsx";
 // truy cập cần đăng nhập tài khoản admin
 import Book from "./components/Admin/Book/Book/Book.jsx";
 import Category from "./components/Admin/Category/Category/Category.jsx";
@@ -25,6 +26,7 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/Search" element={<Search />} />
       <Route path="/Detail/:bookId" element={<Detail />} />
       <Route path="/CategoryDetail/:id" element={<CategoryDetail />} />
       {!isLogin && (

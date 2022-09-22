@@ -104,13 +104,18 @@ section {
   color: var(--light-color);
   padding: 1rem 0;
 }
-/*  */
+/* pagination */
+.pagination__area {
+  width: 80%;
+  margin: 32px auto;
+  display: flex;
+  justify-content: center;
+}
 .pagination {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 12px;
-  margin-bottom: 20px;
+  list-style-type: none;
 }
 .button {
   border: 1px solid #087f5b;
@@ -129,21 +134,21 @@ section {
   font-size: 18px;
   color: #343a40;
   text-decoration: none;
-  height: 36px;
-  width: 36px;
+  height: 45px;
+  width: 45px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
+.pagination .button .page-link {
+  line-height: 43px;
+  font-size: 24px;
+  padding: 0 17px;
+}
 .page-link:hover,
 .page-link:active,
-.page-link.page-link--current {
+.button.page-link--current {
   background-color: #087f5b;
   color: #fff;
-}
-
-.dots {
-  color: #343a40;
 }

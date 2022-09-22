@@ -6,7 +6,10 @@ const BookSchema = new mongoose.Schema(
     vd: " data " => "data"
     */
     name: { type: String, trim: true },
-    image: { type: Object, trim: true },
+    // image: { type: String, trim: true }, //lưu 1 ảnh local
+    // image: [{ type: Object }], //lưu nhiều ảnh local
+    image: { type: Object, trim: true }, //lưu 1 ảnh google drive
+    // image: [{ type: Object }], // lưu nhiều ảnh google drive
     imageLink: {
       type: String,
       trim: true,

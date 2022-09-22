@@ -33,7 +33,7 @@ exports.getBook = async (req, res) => {
     res.status(400).json(error);
   }
 };
-// ảnh local
+// ảnh local(1,nhiều)
 // exports.createBookLocal = async (req, res) => {
 //   try {
 //     const createBook = await new Book({
@@ -41,7 +41,10 @@ exports.getBook = async (req, res) => {
 //       user: req.body.user,
 //       category: req.body.category,
 //       status: req.body.status,
-//       image: req.file.filename,
+//       // 1 ảnh
+//       // image: req.file.filename,
+//       // nhiều ảnh
+//       image: req.files,
 //     });
 //     const newBook = await createBook.save();
 //     res.status(200).json({
@@ -55,14 +58,30 @@ exports.getBook = async (req, res) => {
 // };
 // exports.updateBookLocal = async (req, res) => {
 //   try {
-//     if (req.file) {
-//       const book = await Book.findByIdAndUpdate(req.params.id);
-//       fs.unlink(`../ui/public/assets/image_book/${book.image}`, (err) => {
-//         return console.log(err);
+//     // 1 ảnh
+//     // if (req.file) {
+//     //   const book = await Book.findById(req.params.id);
+//     //   fs.unlink(`../ui/public/assets/image_book/${book.image}`, (err) => {
+//     //     return console.log(err);
+//     //   });
+//     //   book.image = req.file.filename;
+//     //   const newImage = await book.save();
+//     // }
+//     // nhiều ảnh
+//     if (req.files) {
+//       const book = await Book.findById(req.params.id);
+//       const images = book.image;
+//       images.forEach((i) => {
+//         const deleteImages = i.filename;
+//         console.log(deleteImages);
+//         fs.unlink(`../ui/public/assets/images/${deleteImages}`, (err) => {
+//           return console.log(err);
+//         });
 //       });
-//       book.image = req.file.filename;
+//       book.image = req.files;
 //       const newImage = await book.save();
 //     }
+//     console.log("no run");
 //     const UpdateBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
 //       new: true,
 //       runValidators: true,
@@ -78,10 +97,21 @@ exports.getBook = async (req, res) => {
 // };
 // exports.deleteBookLocal = async (req, res) => {
 //   try {
+//     // nhiều ảnh
 //     const book = await Book.findByIdAndDelete(req.params.id);
-//     fs.unlink(`../ui/public/assets/image_book/${book.image}`, (err) => {
-//       return console.log(err);
+//     const images = book.image;
+//     images.forEach((i) => {
+//       const deleteImages = i.filename;
+//       console.log(deleteImages);
+//       fs.unlink(`../ui/public/assets/images/${deleteImages}`, (err) => {
+//         return console.log(err);
+//       });
 //     });
+//     // 1 local
+//     // const book = await Book.findByIdAndDelete(req.params.id);
+//     // fs.unlink(`../ui/public/assets/image_book/${book.image}`, (err) => {
+//     //   return console.log(err);
+//     // });
 //     res.status(200).json({
 //       status: "Xóa thành công",
 //     });
@@ -90,7 +120,7 @@ exports.getBook = async (req, res) => {
 //     res.status(400).json(error);
 //   }
 // };
-// lưu ảnh google drive
+// lưu 1 ảnh google drive -------------------------------------------------------------
 const googleApis = require("googleapis");
 const oauth2Client = new googleApis.google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -106,13 +136,48 @@ const drive = googleApis.google.drive({
 });
 exports.createBookGoogle = async (req, res) => {
   try {
+    // ----------- nhiều ảnh --------------
     // const folder = await drive.files.create({
     //   requestBody: {
     //     name: req.body.name,
     //     mimeType: "application/vnd.google-apps.folder",
     //   },
     // });
-    // console.log(folder.data);
+    // const images = req.files;
+    // images.forEach(async (i) => {
+    //   const nameImages = i.originalname;
+    //   const pathImages = i.path;
+    //   const image = await drive.files.create({
+    //     requestBody: {
+    //       name: nameImages,
+    //       mimeType: "image/jpg",
+    //       parents: [folder.data.id],
+    //     },
+    //     media: {
+    //       mimeType: "image/jpg",
+    //       body: fs.createReadStream(pathImages),
+    //     },
+    //   });
+    //   const imageId = image.data.id;
+    //   await drive.permissions.create({
+    //     fileId: imageId,
+    //     requestBody: {
+    //       role: "reader",
+    //       type: "anyone",
+    //     },
+    //   });
+    //   await drive.files.get({
+    //     fileId: imageId,
+    //     fields: "webContentLink, webViewLink",
+    //   });
+    // });
+    // --------------------- 1 ảnh -----------------------------------
+    // const folder = await drive.files.create({
+    //   requestBody: {
+    //     name: req.body.name,
+    //     mimeType: "application/vnd.google-apps.folder",
+    //   },
+    // });
     const image = await drive.files.create({
       requestBody: {
         name: req.file.originalname,
@@ -142,7 +207,7 @@ exports.createBookGoogle = async (req, res) => {
       user: req.body.user,
       category: req.body.category,
       status: req.body.status,
-      image: image.data,
+      image: images,
     });
     const newBook = await createBook.save();
     res.status(200).json({
@@ -202,7 +267,7 @@ exports.updateBookGoogle = async (req, res) => {
 exports.deleteBookGoogle = async (req, res) => {
   try {
     const book = await Book.findByIdAndDelete(req.params.id);
-    const image = await drive.files.delete({
+    await drive.files.delete({
       fileId: book.image.id,
     });
     res.status(200).json({

@@ -125,18 +125,10 @@ const MainMenu = () => {
             </ul>
           </div>
           <label htmlFor="show-search" className="search-icon">
-            <i className="fas fa-search"></i>
+            <Link to="/Search" className="search">
+              <i className="fas fa-search"></i>
+            </Link>
           </label>
-          <form action="#" className="search-box">
-            <input
-              type="text"
-              placeholder="Type Something to Search..."
-              required
-            />
-            <button type="submit" className="go-icon">
-              <i className="fas fa-long-arrow-alt-right"></i>
-            </button>
-          </form>
         </nav>
       </div>
     </>

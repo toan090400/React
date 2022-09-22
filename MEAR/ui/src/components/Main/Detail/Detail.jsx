@@ -6,17 +6,16 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 const Detail = () => {
   const { bookId } = useParams();
-  console.log(bookId);
   const [getBook, setBook] = useState({});
   const [getImage, setImage] = useState("");
   useEffect(() => {
     const getBook = async () => {
       try {
         const getBook = await axios.get(
-          `http://localhost:5000/api/books/${bookId}`
+          `http://localhost:5000/api/actions/book/${bookId}`
         );
-        setBook(getBook.data);
-        setImage(getBook.data.image.id);
+        setBook(getBook.data.book);
+        setImage(getBook.data.book.image.id);
       } catch (error) {
         console.log(error);
       }

@@ -54,7 +54,6 @@ const Book = () => {
                     <td data="Image">
                       <div className="image">
                         <img
-                          // src={`/${item.image.id}`}
                           src={`https://lh3.googleusercontent.com/d/${item.image.id}`}
                           alt={item.name}
                         />

@@ -1,0 +1,111 @@
+import "./search.css";
+import MainMenu from "../../Layout/MainMenu/MainMenu.jsx";
+
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import ReactPaginate from "react-paginate";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+const Search = () => {
+  const [getBooks, setBooks] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [page_total, setPage_total] = useState(1);
+  const [search, setSearch] = useState("");
+  const { register, handleSubmit, reset } = useForm();
+  const onSubmit = async (data) => {
+    try {
+      setPageNumber(0);
+      setSearch(data.search);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    const getAllBooks = async () => {
+      try {
+        const result = await axios.get(
+          `http://localhost:5000/api/actions/search?page=${pageNumber}&search=${search}`
+        );
+        setBooks(result.data.book);
+        setPage_total(result.data.page_total);
+        setPageNumber(result.data.page);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllBooks();
+  }, [pageNumber, search]);
+  const handlePageCick = async (data) => {
+    setPageNumber(data.selected);
+  };
+  return (
+    <>
+      <MainMenu />
+      <section className="features" id="features">
+        <h1 className="heading">Search</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="text"
+            className="search"
+            placeholder="florinpop17"
+            id="username"
+            {...register("search", {
+              required: {
+                value: true,
+                message: "Không được trống",
+              },
+            })}
+          />
+        </form>
+        <div className="box-container">
+          {getBooks.map((item) => {
+            return (
+              <div key={item._id} className="box">
+                <img
+                  src={`https://lh3.googleusercontent.com/d/${item.image.id}`}
+                  alt={item.name}
+                />
+                <h3>{item.name}</h3>
+                <p>
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Deserunt, earum!
+                </p>
+                <Link to={`/Detail/${item._id}`} className="btn">
+                  Detail
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+      <div className="pagination__area">
+        <ReactPaginate
+          // tạo nút previous
+          previousLabel={<i className="fa-solid fa-angles-left"></i>}
+          // tạo nút next
+          nextLabel={<i className="fa-solid fa-angles-right"></i>}
+          // tạo khoản trắng loại bỏ ví dụ 1,2,3, ... ,9,10
+          // breakLabel={"..."}
+          // tổng có bao nhiêu trang
+          pageCount={page_total}
+          marginPagesDisplayed={3}
+          pageRangeDisplayed={2}
+          onPageChange={handlePageCick}
+          containerClassName={"pagination"} //ul
+          pageClassName={"page-item"} //li
+          pageLinkClassName={"page-link"} //a
+          previousClassName={"page-item"} // previous li
+          previousLinkClassName={"page-link"} // previous a
+          nextClassName={"page-item"} // next li
+          nextLinkClassName={"page-link"} // next a
+          breakClassName={"page-item"} // break li
+          breakLinkClassName={"page-link"} // break a
+          activeClassName={"active"} // li trang hiện tại đăng chọn
+        />
+      </div>
+    </>
+  );
+};
+
+export default Search;

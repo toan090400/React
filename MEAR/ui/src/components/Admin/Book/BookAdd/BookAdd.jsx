@@ -32,16 +32,21 @@ const BookAdd = () => {
     try {
       // console.log(data);
       const categorys = data.category;
+      const image = data.image;
       const formData = await new FormData();
       formData.append("name", data.name);
       formData.append("user", data.user);
-      // formData.append("category", data.category);
       categorys.forEach((item) => {
         formData.append("category[]", item);
       });
       formData.append("status", data.status);
-      formData.append("image", data.image[0]);
-      console.log(data.image);
+      // lưu 1 ảnh (local/google drive)
+      formData.append("image", image[0]);
+      // lưu nhiều ảnh ảnh (local/google drive)
+      // for (let i = 0; i < image.length; i++) {
+      //   formData.append("image", image[i]);
+      // }
+
       await axios.post("http://localhost:5000/api/books", formData);
       reset();
     } catch (error) {
@@ -114,7 +119,6 @@ const BookAdd = () => {
               })}
               {errors.category && <small>{errors.category.message}</small>}
             </div>
-
             <div className="form__control">
               <h2>Status</h2>
               {errors.status && <i className="fas fa-exclamation-circle"></i>}

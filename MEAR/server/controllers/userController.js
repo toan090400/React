@@ -24,35 +24,15 @@ exports.createUser = async (req, res) => {
   try {
     const username = await User.findOne({ username: req.body.username });
     if (username) {
-      res.status(201).json({
+      return res.status(201).json({
         message: "Tài khoản đã tồn tại.",
       });
-    } else {
-      req.body.password = bcrypt.hashSync(req.body.password, 10);
-      const newUser = await User.create(req.body);
-
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRWS_IN,
-      });
-
-      const cookieOptions = {
-        expires: new Date(
-          Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-        ),
-        httpOnly: true,
-      };
-      if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
-
-      res.cookie("jwt", token, cookieOptions);
-
-      // Remove password from output
-      newUser.password = undefined;
-
-      res.status(201).json({
-        token,
-        newUser,
-      });
     }
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
+    const newUser = await User.create(req.body);
+    res.status(201).json({
+      newUser,
+    });
   } catch (error) {
     console.log(error);
     res.status(400).json(error);

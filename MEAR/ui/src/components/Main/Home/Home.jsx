@@ -37,7 +37,7 @@ const Home = () => {
             return (
               <div key={item._id} className="box">
                 <img
-                  // src={`https://lh3.googleusercontent.com/d/${item.image.id}`}
+                  src={`https://lh3.googleusercontent.com/d/${item.image.id}`}
                   alt={item.name}
                 />
                 <h3>{item.name}</h3>

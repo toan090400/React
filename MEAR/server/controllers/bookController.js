@@ -136,41 +136,6 @@ const drive = googleApis.google.drive({
 });
 exports.createBookGoogle = async (req, res) => {
   try {
-    // ----------- nhiều ảnh --------------
-    // const folder = await drive.files.create({
-    //   requestBody: {
-    //     name: req.body.name,
-    //     mimeType: "application/vnd.google-apps.folder",
-    //   },
-    // });
-    // const images = req.files;
-    // images.forEach(async (i) => {
-    //   const nameImages = i.originalname;
-    //   const pathImages = i.path;
-    //   const image = await drive.files.create({
-    //     requestBody: {
-    //       name: nameImages,
-    //       mimeType: "image/jpg",
-    //       parents: [folder.data.id],
-    //     },
-    //     media: {
-    //       mimeType: "image/jpg",
-    //       body: fs.createReadStream(pathImages),
-    //     },
-    //   });
-    //   const imageId = image.data.id;
-    //   await drive.permissions.create({
-    //     fileId: imageId,
-    //     requestBody: {
-    //       role: "reader",
-    //       type: "anyone",
-    //     },
-    //   });
-    //   await drive.files.get({
-    //     fileId: imageId,
-    //     fields: "webContentLink, webViewLink",
-    //   });
-    // });
     // --------------------- 1 ảnh -----------------------------------
     // const folder = await drive.files.create({
     //   requestBody: {
@@ -202,12 +167,14 @@ exports.createBookGoogle = async (req, res) => {
       fileId: imageId,
       fields: "webContentLink, webViewLink",
     });
+    // const images = req.files;
     const createBook = await new Book({
       name: req.body.name,
       user: req.body.user,
       category: req.body.category,
       status: req.body.status,
-      image: images,
+      // 1 ảnh
+      image: image.data,
     });
     const newBook = await createBook.save();
     res.status(200).json({

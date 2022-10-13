@@ -23,12 +23,21 @@ export const AuthContextProvider = (props) => {
 
   useEffect(() => {
     getUserData();
-    // setIsLoggedIn(true);
   }, []);
 
-  const loginHandler = async () => {
-    await window.open(`http://localhost:5000/auth/google/callback`, "_self");
-    // setIsLoggedIn(true);
+  const loginHandler = async (item) => {
+    if (item === "google") {
+      return await window.open(
+        `http://localhost:5000/auth/google/callback`,
+        "_self"
+      );
+    }
+    if (item === "github") {
+      return await window.open(
+        `http://localhost:5000/auth/github/callback`,
+        "_self"
+      );
+    }
   };
 
   const logoutHandler = () => {

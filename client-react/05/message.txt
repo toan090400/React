@@ -1,7 +1,0 @@
-https://github.com/academind/react-complete-guide-code
-
-Hiển thị data bằng map()
-
-Làm chức năng lọc
-
-làm chức thêm mới dữ liệu

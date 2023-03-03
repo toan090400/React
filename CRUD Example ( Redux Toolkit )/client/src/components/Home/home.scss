@@ -1,0 +1,13 @@
+.container {
+  padding: 0 200px;
+  .link {
+    margin: 50px 0;
+  }
+  .data {
+    .list {
+      display: flex;
+      gap: 50px;
+      margin: 20px 0;
+    }
+  }
+}

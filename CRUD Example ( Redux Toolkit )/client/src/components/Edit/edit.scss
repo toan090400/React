@@ -1,0 +1,11 @@
+.from {
+  padding: 100px;
+  .form-controll {
+    margin: 20px 0;
+    display: flex;
+    gap: 20px;
+    span {
+      color: rgb(248, 119, 119);
+    }
+  }
+}

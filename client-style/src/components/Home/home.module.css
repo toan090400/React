@@ -1,9 +1,0 @@
-.home {
-  color: red;
-}
-.home:hover {
-  color: rgb(255, 251, 0);
-}
-.home.start {
-  background-color: rgb(223, 171, 171);
-}

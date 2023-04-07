@@ -1,6 +1,7 @@
 import React from "react";
 import "./edit.scss";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 const Edit = ({ update, edit }) => {
   const {
     register,
@@ -18,6 +19,7 @@ const Edit = ({ update, edit }) => {
   };
   return (
     <div className="from">
+      <Link to={`/`}>Home</Link>
       <h1>Edit: {edit}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-controll">
@@ -39,7 +41,7 @@ const Edit = ({ update, edit }) => {
                 message: "Title tối da 10 ký tự",
               },
             })}
-            defaultValue="sacsdfas"
+            defaultValue={edit}
           />
           {errors.name && <span>{errors.name.message}</span>}
         </div>
